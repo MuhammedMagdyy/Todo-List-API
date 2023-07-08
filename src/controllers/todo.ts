@@ -30,3 +30,30 @@ export const getTodo = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ success: false });
   }
 };
+
+export const createTodo = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { title, content, completed } = req.body;
+    if (!title) {
+      res.status(400).json({ success: false });
+      return;
+    }
+    const todo = await prisma.todo.create({
+      data: {
+        title,
+        content,
+        completed,
+      },
+    });
+    if (!todo) {
+      res.status(404).json({ success: false });
+      return;
+    }
+    res.status(201).json({ success: true, data: todo });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+};
