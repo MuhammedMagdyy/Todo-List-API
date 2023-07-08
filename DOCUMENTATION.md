@@ -1,26 +1,35 @@
 # API Documentation
+
 This API provides endpoints for creating, retrieving, updating, and deleting to-do items. It allows you to manage your to-do list efficiently by performing CRUD operations on it.
 
 ## Base URL
+
 ```
 https://localhost:3000/api/
 ```
 
 ## Endpoints
+
 The API supports the following endpoints:
 
 ---
+
 ### Note
-__Requests must be made with JSON type__
+
+**Requests must be made with JSON type**
+
 ```
 Content-Type: application/json
 ```
+
 ---
 
-__Retrive all todos__
+**Retrive all todos**
+
 ```HTTP
 GET /api/todos
 ```
+
 - **Response**: JSON array containing all the to-do items.
   - Example response:
     ```JSON
@@ -40,19 +49,21 @@ GET /api/todos
     ]
     ```
 
-__Create todo__
+**Create todo**
+
 ```HTTP
 POST /api/todos
 ```
+
 - **Request body**: JSON object containing the to-do item data.
-   - Example request:
-     ```JSON
-      {
-        "title": "Buy vegetables",
-        "Content": "Don't miss to buy vegetables",
-        "completed": false
-      }   
-     ```
+  - Example request:
+    ```JSON
+     {
+       "title": "Buy vegetables",
+       "Content": "Don't miss to buy vegetables",
+       "completed": false
+     }
+    ```
 - **Response**: JSON object representing the created to-do item.
   - Example response:
     ```JSON
@@ -61,16 +72,19 @@ POST /api/todos
         "title": "Buy vegetables",
         "Content": "Don't miss to buy vegetables",
         "completed": false
-      }   
-     ```
+      }
+    ```
 
-__Retive specefic todo__
+**Retive specefic todo**
+
 ```HTTP
 GET /api/todos/:id
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+
+| Parameter | Type     | Description                             |
+| :-------- | :------- | :-------------------------------------- |
 | `id`      | `string` | The unique identifier of the to-do item |
+
 - **Response**: JSON object representing the requested to-do item.
   - Example request:
     ```HTTP
@@ -83,16 +97,19 @@ GET /api/todos/:id
         "title": "Buy vegetables",
         "Content": "Don't miss to buy vegetables",
         "completed": false
-      }   
-     ```
-    
-__Update todo__
+      }
+    ```
+
+**Update todo**
+
 ```HTTP
 PATCH /api/todos/:id
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+
+| Parameter | Type     | Description                             |
+| :-------- | :------- | :-------------------------------------- |
 | `id`      | `string` | The unique identifier of the to-do item |
+
 - **Request body**: JSON object containing the updated to-do item data.
   - Example request:
     ```HTTP
@@ -103,8 +120,8 @@ PATCH /api/todos/:id
         "title": "Buy vegetables",
         "Content": "Don't miss to buy vegetables",
         "completed": false
-      }   
-     ```
+      }
+    ```
 - **Response**: JSON object representing the updated to-do item.
   - Example response:
     ```JSON
@@ -113,16 +130,19 @@ PATCH /api/todos/:id
         "title": "Buy vegetables",
         "Content": "Don't miss to buy vegetables",
         "completed": true
-      }   
-     ```
-  
-__Delete todo__
+      }
+    ```
+
+**Delete todo**
+
 ```HTTP
 DELETE /api/todos/:id
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+
+| Parameter | Type     | Description                             |
+| :-------- | :------- | :-------------------------------------- |
 | `id`      | `string` | The unique identifier of the to-do item |
+
 - **Response**: JSON object indicating the success or failure of the deletion operation.
   - Example request:
     ```HTTP
@@ -134,8 +154,11 @@ DELETE /api/todos/:id
       "success": true
     }
     ```
+
 ## Errors
+
 This API uses the following error codes:
+
 - `400 Bad Request` &rarr; The request was malformed or missing required parameters.
 - `404 Not Found` &rarr; The requested resource was not found.
 - `500 Internal Server Error` &rarr; An unexpected error occurred on the server.
