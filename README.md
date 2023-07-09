@@ -4,10 +4,10 @@ Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for
 ## Getting started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Also, You need to read the [API Documentation](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/DOCUMENTATION.md).
+Also, You need to read the [**API Documentation**](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/DOCUMENTATION.md).
 
 ### Prerequisites
-- Download and install [PostgreSQL](https://www.postgresql.org/download/) & Seach How to install it using [Docker](https://www.docker.com/)
+- Download and install [PostgreSQL](https://www.postgresql.org/download/) & How to install it using [Docker](https://www.docker.com/) from [Docker Hub](https://hub.docker.com/_/postgres)
 - A web browser (e.g. Google Chrome, Mozilla Firefox, Microsoft Edge)
 - A text editor (e.g. Visual Studio Code, Sublime Text)
 - [Postman](https://www.postman.com/downloads/)
