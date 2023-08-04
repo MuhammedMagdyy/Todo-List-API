@@ -21,7 +21,7 @@ https://github.com/MuhammedMagdyy/Todo-List-API.git
 ```
 2. Install [required packages](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/package.json) `npm install`
 3. Configure the environment variables, such as the database URL.
-4. `npm run build` then `npm run start`
+4. `npm run build` then `npm run start` or use `npm run dev`.
 
 ## Tools & Technologies
 - TypeScript
