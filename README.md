@@ -4,7 +4,7 @@ Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for
 ## Getting started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Also, You need to read the [**API Documentation**](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/DOCUMENTATION.md).
+Also, You need to read the [**API Documentation**](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/Documentation.md).
 
 ### Prerequisites
 - Download and install [Nodejs](https://nodejs.org/en)
