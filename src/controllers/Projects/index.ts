@@ -26,3 +26,9 @@ export const getAllProjects = asyncHandler(async (req, res) => {
 
   res.status(OK).json({ data: projects });
 });
+
+export const getLastFourProjects = asyncHandler(async (req, res) => {
+  const projects = await projectSerivce.findLastFour();
+
+  res.status(OK).json({ data: projects });
+});

@@ -15,6 +15,10 @@ export class ProjectSerivce {
   async findMany() {
     return this.projectRepository.findMany();
   }
+
+  async findLastFour() {
+    return this.projectRepository.findLastFour();
+  }
 }
 
 export const projectSerivce = new ProjectSerivce(projectRepository);
