@@ -15,6 +15,10 @@ export class TaskService {
   async findMany() {
     return this.taskRepository.findMany();
   }
+
+  async findLastFour() {
+    return this.taskRepository.findLastFour();
+  }
 }
 
 export const taskService = new TaskService(taskRepository);

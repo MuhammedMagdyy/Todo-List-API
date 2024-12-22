@@ -26,3 +26,9 @@ export const getAllTasks = asyncHandler(async (req, res) => {
 
   res.status(OK).json({ data: tasks });
 });
+
+export const getLastFourTasks = asyncHandler(async (req, res) => {
+  const tasks = await taskService.findLastFour();
+
+  res.status(OK).json({ data: tasks });
+});

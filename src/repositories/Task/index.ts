@@ -15,6 +15,15 @@ export class TaskRepository {
   findMany() {
     return this.prisma.task.findMany();
   }
+
+  findLastFour() {
+    return this.prisma.task.findMany({
+      orderBy: {
+        updatedAt: 'desc',
+      },
+      take: 4,
+    });
+  }
 }
 
 export const taskRepository = new TaskRepository(prisma);
