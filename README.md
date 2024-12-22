@@ -22,6 +22,9 @@ Also, You need to read the [**API Documentation**](https://github.com/MuhammedMa
 - A platform for testing APIs like [Postman](https://www.postman.com/downloads/)
 - Database engine (e.g [DBeaver](https://dbeaver.io/download/), [DataGrip](https://www.jetbrains.com/datagrip/download/))
 
+### Schema
+![Schema](https://github.com/user-attachments/assets/9ee8f5f0-7d9b-4dd3-b746-b0a635f7be0f)
+
 ### Installing
 1. Clone the repository to your local machine:
 ```HTTPS
