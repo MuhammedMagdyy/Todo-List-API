@@ -1,20 +1,70 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model todo {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  completed Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Project {
+  uuid        String    @id @default(uuid())
+  name        String
+  description String?
+  dueDate     DateTime? @map("due_date") @db.Date
+  color       String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+
+  statusUuid String @unique @map("status_uuid")
+  status     Status @relation(fields: [statusUuid], references: [uuid])
+
+  tasks Task[]
+
+  @@map("projects")
+}
+
+model Task {
+  uuid        String    @id @default(uuid())
+  name        String
+  description String?
+  dueDate     DateTime? @map("due_date") @db.Date
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+
+  projectUuid String  @map("project_uuid")
+  project     Project @relation(fields: [projectUuid], references: [uuid])
+
+  tagUuid String? @map("tag_uuid")
+  tag     Tag?    @relation(fields: [tagUuid], references: [uuid])
+
+  statusUuid String @unique @map("status_uuid")
+  status     Status @relation(fields: [statusUuid], references: [uuid])
+
+  @@map("tasks")
+}
+
+model Tag {
+  uuid      String   @id @default(uuid())
+  name      String
+  color     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  tasks Task[]
+
+  @@map("tags")
+}
+
+model Status {
+  uuid      String   @id @default(uuid())
+  name      String
+  color     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  project Project?
+  task    Task?
+
+  @@map("statuses")
 }
