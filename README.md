@@ -1,4 +1,12 @@
 # Todo List
+
+![Node.js](https://img.shields.io/badge/Node.js-green?logo=node.js&style=flat)
+![Express](https://img.shields.io/badge/Express-lightgrey?logo=express&style=flat)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&style=flat)
+![Docker](https://img.shields.io/badge/Docker-blue?logo=docker&style=flat)
+![MySQL](https://img.shields.io/badge/MySQL-red?logo=mysql&style=flat)
+![Prisma](https://img.shields.io/badge/Prisma-blueviolet?logo=prisma&style=flat)
+
 Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for managing a to-do list.
 
 ## Getting started
@@ -8,7 +16,7 @@ Also, You need to read the [**API Documentation**](https://github.com/MuhammedMa
 
 ### Prerequisites
 - Download and install [Nodejs](https://nodejs.org/en)
-- Download and install [PostgreSQL](https://www.postgresql.org/download/) & How to install it using [Docker](https://www.docker.com/) from [Docker Hub](https://hub.docker.com/_/postgres)
+- Download and install [MySQL](https://www.mysql.com/downloads/) using [Docker](https://www.docker.com/) from [Docker Hub](https://hub.docker.com/_/mysql)
 - A web browser (e.g. Google Chrome, Mozilla Firefox, Microsoft Edge)
 - A text editor (e.g. Visual Studio Code, Sublime Text)
 - A platform for testing APIs like [Postman](https://www.postman.com/downloads/)
@@ -27,5 +35,5 @@ https://github.com/MuhammedMagdyy/Todo-List-API.git
 - TypeScript
 - Nodejs
   - Express.js
-- PostgreSQL
+- MySQL
 - Prisma (ORM)

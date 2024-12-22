@@ -4,29 +4,43 @@
   "description": "Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for managing a todo list.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
+    "build": "tsc",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\"",
-    "seed": "ts-node prisma/seed.ts",
-    "build": "tsc"
+    "start": "NODE_ENV=production node dist/index.js",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "db:migrate": "prisma migrate dev --schema=src/database/prisma/schema.prisma",
+    "db:generate": "prisma generate --schema=src/database/prisma/schema.prisma",
+    "db:push": "prisma db push --schema=src/database/prisma/schema.prisma",
+    "db:studio": "prisma studio --schema=src/database/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.4.1",
-    "prisma": "^4.16.2",
-    "ts-node": "^10.9.1",
-    "tsc-watch": "^6.0.4",
-    "typescript": "^5.1.6"
-  },
   "dependencies": {
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^6.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "pg": "^8.11.1"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-async-handler": "^1.2.0",
+    "morgan": "^1.10.0",
+    "uuid": "^11.0.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.4.1",
+    "prisma": "^6.1.0",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.2"
   }
 }
