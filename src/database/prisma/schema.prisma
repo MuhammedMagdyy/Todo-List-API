@@ -16,7 +16,7 @@ model Project {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @default(now()) @map("updated_at")
 
-  statusUuid String @unique @map("status_uuid")
+  statusUuid String @map("status_uuid")
   status     Status @relation(fields: [statusUuid], references: [uuid])
 
   tasks Task[]
@@ -38,7 +38,7 @@ model Task {
   tagUuid String? @map("tag_uuid")
   tag     Tag?    @relation(fields: [tagUuid], references: [uuid])
 
-  statusUuid String @unique @map("status_uuid")
+  statusUuid String @map("status_uuid")
   status     Status @relation(fields: [statusUuid], references: [uuid])
 
   @@map("tasks")
@@ -63,8 +63,8 @@ model Status {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
-  project Project?
-  task    Task?
+  project Project[]
+  task    Task[]
 
   @@map("statuses")
 }
