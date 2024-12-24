@@ -13,7 +13,15 @@ export class ProjectRepository {
   }
 
   findMany() {
-    return this.prisma.project.findMany({ include: { tasks: true } });
+    return this.prisma.project.findMany({
+      include: {
+        tasks: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+    });
   }
 
   findLastFour() {
