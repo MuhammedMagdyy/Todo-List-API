@@ -4,20 +4,20 @@ import prisma from '../../database/client';
 export class TaskRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  createOne(data: Prisma.TaskUncheckedCreateInput) {
-    return this.prisma.task.create({ data });
+  async createOne(data: Prisma.TaskUncheckedCreateInput) {
+    return await this.prisma.task.create({ data });
   }
 
-  findOne(query: Prisma.TaskWhereInput) {
-    return this.prisma.task.findFirst({ where: query });
+  async findOne(query: Prisma.TaskWhereInput) {
+    return await this.prisma.task.findFirst({ where: query });
   }
 
-  findMany() {
-    return this.prisma.task.findMany();
+  async findMany() {
+    return await this.prisma.task.findMany();
   }
 
-  findLastFour() {
-    return this.prisma.task.findMany({
+  async findLastFour() {
+    return await this.prisma.task.findMany({
       orderBy: {
         updatedAt: 'desc',
       },

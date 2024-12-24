@@ -5,19 +5,19 @@ export class ProjectSerivce {
   constructor(private readonly projectRepository: ProjectRepository) {}
 
   async createOne(data: Prisma.ProjectUncheckedCreateInput) {
-    return this.projectRepository.createOne(data);
+    return await this.projectRepository.createOne(data);
   }
 
   async findOne(query: Prisma.ProjectWhereInput) {
-    return this.projectRepository.findOne(query);
+    return await this.projectRepository.findOne(query);
   }
 
   async findMany() {
-    return this.projectRepository.findMany();
+    return await this.projectRepository.findMany();
   }
 
   async findLastFour() {
-    return this.projectRepository.findLastFour();
+    return await this.projectRepository.findLastFour();
   }
 }
 

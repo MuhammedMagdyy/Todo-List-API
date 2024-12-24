@@ -4,16 +4,16 @@ import prisma from '../../database/client';
 export class TagRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  createOne(data: Prisma.TagUncheckedCreateInput) {
-    return this.prisma.tag.create({ data });
+  async createOne(data: Prisma.TagUncheckedCreateInput) {
+    return await this.prisma.tag.create({ data });
   }
 
-  findOne(query: Prisma.TagWhereInput) {
-    return this.prisma.tag.findFirst({ where: query });
+  async findOne(query: Prisma.TagWhereInput) {
+    return await this.prisma.tag.findFirst({ where: query });
   }
 
-  findMany() {
-    return this.prisma.tag.findMany();
+  async findMany() {
+    return await this.prisma.tag.findMany();
   }
 }
 

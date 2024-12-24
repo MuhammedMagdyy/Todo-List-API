@@ -4,7 +4,7 @@ export class StatusSerivce {
   constructor(private readonly statusRepository: StatusRepository) {}
 
   async findMany() {
-    return this.statusRepository.findMany();
+    return await this.statusRepository.findMany();
   }
 }
 

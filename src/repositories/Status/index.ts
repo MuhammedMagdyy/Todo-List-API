@@ -4,8 +4,8 @@ import prisma from '../../database/client';
 export class StatusRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  findMany() {
-    return this.prisma.status.findMany({
+  async findMany() {
+    return await this.prisma.status.findMany({
       select: {
         uuid: true,
         name: true,

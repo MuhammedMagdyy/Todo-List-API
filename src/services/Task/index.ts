@@ -5,19 +5,19 @@ export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
 
   async createOne(data: Prisma.TaskUncheckedCreateInput) {
-    return this.taskRepository.createOne(data);
+    return await this.taskRepository.createOne(data);
   }
 
   async findOne(query: Prisma.TaskWhereInput) {
-    return this.taskRepository.findOne(query);
+    return await this.taskRepository.findOne(query);
   }
 
   async findMany() {
-    return this.taskRepository.findMany();
+    return await this.taskRepository.findMany();
   }
 
   async findLastFour() {
-    return this.taskRepository.findLastFour();
+    return await this.taskRepository.findLastFour();
   }
 }
 

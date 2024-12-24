@@ -4,16 +4,16 @@ import prisma from '../../database/client';
 export class ProjectRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  createOne(data: Prisma.ProjectUncheckedCreateInput) {
-    return this.prisma.project.create({ data });
+  async createOne(data: Prisma.ProjectUncheckedCreateInput) {
+    return await this.prisma.project.create({ data });
   }
 
-  findOne(query: Prisma.ProjectWhereInput) {
-    return this.prisma.project.findFirst({ where: query });
+  async findOne(query: Prisma.ProjectWhereInput) {
+    return await this.prisma.project.findFirst({ where: query });
   }
 
-  findMany() {
-    return this.prisma.project.findMany({
+  async findMany() {
+    return await this.prisma.project.findMany({
       include: {
         tasks: {
           include: {
@@ -24,8 +24,8 @@ export class ProjectRepository {
     });
   }
 
-  findLastFour() {
-    return this.prisma.project.findMany({
+  async findLastFour() {
+    return await this.prisma.project.findMany({
       orderBy: {
         updatedAt: 'desc',
       },

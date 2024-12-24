@@ -5,15 +5,15 @@ export class TagService {
   constructor(private readonly tagRepository: TagRepository) {}
 
   async createOne(data: Prisma.TagUncheckedCreateInput) {
-    return this.tagRepository.createOne(data);
+    return await this.tagRepository.createOne(data);
   }
 
   async findOne(query: Prisma.TagWhereInput) {
-    return this.tagRepository.findOne(query);
+    return await this.tagRepository.findOne(query);
   }
 
   async findMany() {
-    return this.tagRepository.findMany();
+    return await this.tagRepository.findMany();
   }
 }
 
