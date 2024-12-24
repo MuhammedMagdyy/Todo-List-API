@@ -26,6 +26,13 @@ export class ProjectRepository {
 
   async findLastFour() {
     return await this.prisma.project.findMany({
+      include: {
+        tasks: {
+          include: {
+            tag: true,
+          },
+        },
+      },
       orderBy: {
         updatedAt: 'desc',
       },

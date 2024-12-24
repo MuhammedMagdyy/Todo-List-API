@@ -18,6 +18,9 @@ export class TaskRepository {
 
   async findLastFour() {
     return await this.prisma.task.findMany({
+      include: {
+        tag: true,
+      },
       orderBy: {
         updatedAt: 'desc',
       },
