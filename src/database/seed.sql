@@ -1,4 +1,4 @@
--- Create tables
+-- Create table statuses
 CREATE TABLE IF NOT EXISTS statuses (
     uuid VARCHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS statuses (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create table projects
 CREATE TABLE IF NOT EXISTS projects (
     uuid VARCHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS projects (
     FOREIGN KEY (status_uuid) REFERENCES statuses(uuid)
 );
 
+-- Create table tags
 CREATE TABLE IF NOT EXISTS tags (
     uuid VARCHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -27,6 +29,7 @@ CREATE TABLE IF NOT EXISTS tags (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create table tasks
 CREATE TABLE IF NOT EXISTS tasks (
     uuid VARCHAR(36) NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
