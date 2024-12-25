@@ -21,6 +21,9 @@ export class ProjectRepository {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 

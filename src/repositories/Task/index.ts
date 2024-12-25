@@ -13,7 +13,11 @@ export class TaskRepository {
   }
 
   async findMany() {
-    return await this.prisma.task.findMany();
+    return await this.prisma.task.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   async findLastFour() {
