@@ -8,8 +8,8 @@ export class ProjectRepository {
     return await this.prisma.project.create({ data });
   }
 
-  async findOne(query: Prisma.ProjectWhereInput) {
-    return await this.prisma.project.findFirst({ where: query });
+  async findOne(query: Prisma.ProjectWhereUniqueInput) {
+    return await this.prisma.project.findUnique({ where: query });
   }
 
   async findMany() {
@@ -41,6 +41,17 @@ export class ProjectRepository {
       },
       take: 4,
     });
+  }
+
+  async updateOne(
+    query: Prisma.ProjectWhereUniqueInput,
+    data: Prisma.ProjectUncheckedUpdateInput
+  ) {
+    return await this.prisma.project.update({ where: query, data });
+  }
+
+  async deleteOne(query: Prisma.ProjectWhereUniqueInput) {
+    return await this.prisma.project.delete({ where: query });
   }
 }
 

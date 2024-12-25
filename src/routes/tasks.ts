@@ -3,9 +3,14 @@ import { tasks } from '../controllers';
 
 const router = Router();
 
-router.post('/', tasks.createTask);
-router.get('/', tasks.getAllTasks);
+router.route('/').post(tasks.createTask).get(tasks.getAllTasks);
+
 router.get('/last-four', tasks.getLastFourTasks);
-router.get('/:uuid', tasks.getTask);
+
+router
+  .route('/:uuid')
+  .get(tasks.getTask)
+  .put(tasks.updateTask)
+  .delete(tasks.deleteTask);
 
 export { router as taskRouter };

@@ -3,8 +3,8 @@ import { tags } from '../controllers';
 
 const router = Router();
 
-router.post('/', tags.createTag);
-router.get('/:uuid', tags.getTag);
-router.get('/', tags.getAllTags);
+router.route('/').post(tags.createTag).get(tags.getAllTags);
+
+router.route('/:uuid').get(tags.getTag);
 
 export { router as tagRouter };
