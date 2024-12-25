@@ -8,7 +8,7 @@ export class TaskService {
     return await this.taskRepository.createOne(data);
   }
 
-  async findOne(query: Prisma.TaskWhereInput) {
+  async findOne(query: Prisma.TaskWhereUniqueInput) {
     return await this.taskRepository.findOne(query);
   }
 
@@ -18,6 +18,17 @@ export class TaskService {
 
   async findLastFour() {
     return await this.taskRepository.findLastFour();
+  }
+
+  async updateOne(
+    query: Prisma.TaskWhereUniqueInput,
+    data: Prisma.TaskUncheckedUpdateInput
+  ) {
+    return await this.taskRepository.updateOne(query, data);
+  }
+
+  async deleteOne(query: Prisma.TaskWhereUniqueInput) {
+    return await this.taskRepository.deleteOne(query);
   }
 }
 

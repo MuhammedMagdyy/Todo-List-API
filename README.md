@@ -10,11 +10,13 @@
 Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for managing a to-do list.
 
 ## Getting started
+
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 Also, You need to read the [**API Documentation**](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/Documentation.md).
 
 ### Prerequisites
+
 - Download and install [Nodejs](https://nodejs.org/en)
 - Download and install [MySQL](https://www.mysql.com/downloads/) using [Docker](https://www.docker.com/) from [Docker Hub](https://hub.docker.com/_/mysql)
 - A web browser (e.g. Google Chrome, Mozilla Firefox, Microsoft Edge)
@@ -23,18 +25,23 @@ Also, You need to read the [**API Documentation**](https://github.com/MuhammedMa
 - Database engine (e.g [DBeaver](https://dbeaver.io/download/), [DataGrip](https://www.jetbrains.com/datagrip/download/))
 
 ### Schema
+
 ![Schema](https://github.com/user-attachments/assets/6d2a8099-f628-41ef-a4d1-9c6e5cb57a2b)
 
 ### Installing
+
 1. Clone the repository to your local machine:
+
 ```HTTPS
 https://github.com/MuhammedMagdyy/Todo-List-API.git
 ```
+
 2. Install [required packages](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/package.json) `npm install`
 3. Configure the environment variables, such as the database URL.
 4. `npm run build` then `npm run start` or use `npm run dev`.
 
 ## Tools & Technologies
+
 - TypeScript
 - Nodejs
   - Express.js

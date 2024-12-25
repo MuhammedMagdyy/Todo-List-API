@@ -9,7 +9,7 @@ export const errorHandler: ErrorRequestHandler = (
   error: ErrorType,
   _req: Request,
   res: Response,
-  _next: NextFunction,
+  _next: NextFunction
 ): void => {
   if (error instanceof ApiError) {
     res.status(error.status).json({ message: error.message });
@@ -39,5 +39,7 @@ const sendErrorToDev = (error: ErrorType, res: Response): void => {
 };
 
 const sendErrorToProd = (error: ErrorType, res: Response): void => {
-  res.status(INTERNAL_SERVER_ERROR).json({ cause: 'Internal server error', message: error.message });
+  res
+    .status(INTERNAL_SERVER_ERROR)
+    .json({ cause: 'Internal server error', message: error.message });
 };

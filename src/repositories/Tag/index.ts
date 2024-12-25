@@ -8,8 +8,8 @@ export class TagRepository {
     return await this.prisma.tag.create({ data });
   }
 
-  async findOne(query: Prisma.TagWhereInput) {
-    return await this.prisma.tag.findFirst({ where: query });
+  async findOne(query: Prisma.TagWhereUniqueInput) {
+    return await this.prisma.tag.findUnique({ where: query });
   }
 
   async findMany() {

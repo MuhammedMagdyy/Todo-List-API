@@ -8,7 +8,7 @@ export class ProjectSerivce {
     return await this.projectRepository.createOne(data);
   }
 
-  async findOne(query: Prisma.ProjectWhereInput) {
+  async findOne(query: Prisma.ProjectWhereUniqueInput) {
     return await this.projectRepository.findOne(query);
   }
 
@@ -18,6 +18,17 @@ export class ProjectSerivce {
 
   async findLastFour() {
     return await this.projectRepository.findLastFour();
+  }
+
+  async updateOne(
+    query: Prisma.ProjectWhereUniqueInput,
+    data: Prisma.ProjectUncheckedUpdateInput
+  ) {
+    return await this.projectRepository.updateOne(query, data);
+  }
+
+  async deleteOne(query: Prisma.ProjectWhereUniqueInput) {
+    return await this.projectRepository.deleteOne(query);
   }
 }
 

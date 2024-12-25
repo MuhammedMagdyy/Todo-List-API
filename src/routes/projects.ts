@@ -3,9 +3,14 @@ import { projects } from '../controllers';
 
 const router = Router();
 
-router.post('/', projects.createProject);
-router.get('/', projects.getAllProjects);
+router.route('/').post(projects.createProject).get(projects.getAllProjects);
+
 router.get('/last-four', projects.getLastFourProjects);
-router.get('/:uuid', projects.getProject);
+
+router
+  .route('/:uuid')
+  .get(projects.getProject)
+  .put(projects.updateProject)
+  .delete(projects.deleteProject);
 
 export { router as projectRouter };

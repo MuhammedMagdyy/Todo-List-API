@@ -8,8 +8,8 @@ export class TaskRepository {
     return await this.prisma.task.create({ data });
   }
 
-  async findOne(query: Prisma.TaskWhereInput) {
-    return await this.prisma.task.findFirst({ where: query });
+  async findOne(query: Prisma.TaskWhereUniqueInput) {
+    return await this.prisma.task.findUnique({ where: query });
   }
 
   async findMany() {
@@ -30,6 +30,17 @@ export class TaskRepository {
       },
       take: 4,
     });
+  }
+
+  async updateOne(
+    query: Prisma.TaskWhereUniqueInput,
+    data: Prisma.TaskUncheckedUpdateInput
+  ) {
+    return await this.prisma.task.update({ where: query, data });
+  }
+
+  async deleteOne(query: Prisma.TaskWhereUniqueInput) {
+    return await this.prisma.task.delete({ where: query });
   }
 }
 

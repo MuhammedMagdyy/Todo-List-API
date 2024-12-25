@@ -8,7 +8,7 @@ export class TagService {
     return await this.tagRepository.createOne(data);
   }
 
-  async findOne(query: Prisma.TagWhereInput) {
+  async findOne(query: Prisma.TagWhereUniqueInput) {
     return await this.tagRepository.findOne(query);
   }
 
