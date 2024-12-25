@@ -18,7 +18,9 @@ router.use('/tasks', taskRouter);
 router.use('/statuses', statusRouter);
 
 router.all('*', (request, _res, next) => {
-  return next(new ApiError(`The route ${request.originalUrl} can't be found`, NOT_FOUND));
+  return next(
+    new ApiError(`The route ${request.originalUrl} can't be found`, NOT_FOUND)
+  );
 });
 
 export default router;
