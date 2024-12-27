@@ -14,13 +14,6 @@ export class ProjectRepository {
 
   async findMany() {
     return await this.prisma.project.findMany({
-      include: {
-        tasks: {
-          include: {
-            tag: true,
-          },
-        },
-      },
       orderBy: {
         createdAt: 'desc',
       },
