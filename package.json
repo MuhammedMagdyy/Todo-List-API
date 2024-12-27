@@ -25,6 +25,7 @@
     "express": "^4.21.1",
     "express-async-handler": "^1.2.0",
     "morgan": "^1.10.0",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^11.0.3",
     "zod": "^3.24.1"
   },
@@ -33,6 +34,7 @@
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.1",
+    "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "eslint": "^8.57.1",

@@ -1,0 +1,1193 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Todo List API",
+    "description": "API to manage a todo list.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    },
+    {
+      "url": "https://todo-list-api-production-1907.up.railway.app/api/v1",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "default",
+      "description": "General endpoints"
+    },
+    {
+      "name": "statuses",
+      "description": "Endpoints to manage statuses"
+    },
+    {
+      "name": "tags",
+      "description": "Endpoints to manage tags"
+    },
+    {
+      "name": "tasks",
+      "description": "Endpoints to manage tasks"
+    },
+    {
+      "name": "projects",
+      "description": "Endpoints to manage projects"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["default"],
+        "summary": "Health Check",
+        "description": "Check the health status of the server.",
+        "responses": {
+          "200": {
+            "description": "The server is healthy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "I'm healthy 🤸‍♂️"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/statuses": {
+      "get": {
+        "tags": ["statuses"],
+        "summary": "Get statuses",
+        "description": "Return a list of statuses.",
+        "responses": {
+          "200": {
+            "description": "A list of statuses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/statuses"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/statuses/{uuid}": {
+      "get": {
+        "tags": ["statuses"],
+        "summary": "Get a specific status",
+        "description": "Return details of a specific status based on statusUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The statusUUID of the status.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "color": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["name", "color"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Status not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Status not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tags": {
+      "post": {
+        "tags": ["tags"],
+        "summary": "Create a new tag",
+        "description": "Create a new tag",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the tag. Must be at least 3 characters."
+                  },
+                  "color": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The color of the tag. Must be at least 3 characters."
+                  }
+                },
+                "required": ["name", "color"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tag created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": ["uuid", "name", "color"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["message", "errors"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["tags"],
+        "summary": "Get tags",
+        "description": "Return a list of tags.",
+        "responses": {
+          "200": {
+            "description": "A list of tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tags"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tags/{uuid}": {
+      "get": {
+        "tags": ["tags"],
+        "summary": "Get a specific tag",
+        "description": "Return details of a specific tag based on tagUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The tagUUID of the tag.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific tag.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": ["name", "color"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tag not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Tag not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": ["tasks"],
+        "summary": "Create a new task",
+        "description": "Create a new task",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the task. Must be at least 3 characters."
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The description of the task."
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The due date of the task."
+                  },
+                  "projectUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The projectUUID of the project."
+                  },
+                  "tagUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The tagUUID of the tag (optional)."
+                  },
+                  "statusUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The statusUUID of the status."
+                  }
+                },
+                "required": ["name", "dueDate", "projectUuid", "statusUuid"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "projectUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "tagUuid": {
+                          "type": "string",
+                          "nullable": true,
+                          "format": "uuid"
+                        },
+                        "statusUuid": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid",
+                        "name",
+                        "dueDate",
+                        "projectUuid",
+                        "statusUuid"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["message", "errors"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["tasks"],
+        "summary": "Get tasks",
+        "description": "Return a list of tasks.",
+        "responses": {
+          "200": {
+            "description": "A list of tasks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tasks"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{uuid}": {
+      "get": {
+        "tags": ["tasks"],
+        "summary": "Get a specific task",
+        "description": "Return details of a specific task based on taskUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The taskUUID of the task.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific task.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "projectUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "tagUuid": {
+                          "type": "string",
+                          "nullable": true,
+                          "format": "uuid"
+                        },
+                        "statusUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "dueDate",
+                        "projectUuid",
+                        "statusUuid"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["tasks"],
+        "summary": "Update a specific task",
+        "description": "Update a specific task based on taskUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The taskUUID of the task.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the task. Must be at least 3 characters."
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The description of the task."
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The due date of the task."
+                  },
+                  "projectUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The projectUUID of the project."
+                  },
+                  "tagUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true,
+                    "description": "The tagUUID of the tag (optional)."
+                  },
+                  "statusUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The statusUUID of the status."
+                  }
+                },
+                "required": ["name", "dueDate", "projectUuid", "statusUuid"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "projectUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "tagUuid": {
+                          "type": "string",
+                          "nullable": true,
+                          "format": "uuid"
+                        },
+                        "statusUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "dueDate",
+                        "projectUuid",
+                        "statusUuid"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["message", "errors"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "tags": ["projects"],
+        "summary": "Create a new project",
+        "description": "Create a new project",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the project. Must be at least 3 characters."
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The description of the project."
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The due date of the project."
+                  },
+                  "statusUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The statusUUID of the status."
+                  },
+                  "color": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The color of the project. Must be at least 3 characters."
+                  }
+                },
+                "required": ["name", "statusUuid", "color", "dueDate"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "statusUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": ["uuid", "name", "statusUuid", "color"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["projects"],
+        "summary": "Get projects",
+        "description": "Return a list of projects.",
+        "responses": {
+          "200": {
+            "description": "A list of projects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/projects"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{uuid}": {
+      "get": {
+        "tags": ["projects"],
+        "summary": "Get a specific project",
+        "description": "Return details of a specific project based on projectUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The projectUUID of the project.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific project.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "statusUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "required": ["name", "statusUuid", "color", "dueDate"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Project not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["projects"],
+        "summary": "Update a specific project",
+        "description": "Update a specific project based on projectUUID.",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "description": "The projectUUID of the project.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the project. Must be at least 3 characters."
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The description of the project."
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The due date of the project."
+                  },
+                  "statusUuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The statusUUID of the status."
+                  },
+                  "color": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The color of the project. Must be at least 3 characters."
+                  }
+                },
+                "required": ["name", "statusUuid", "color", "dueDate"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "dueDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "statusUuid": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "color": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["name", "statusUuid", "color", "dueDate"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["message", "errors"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "statuses": {
+        "type": "object",
+        "required": ["name", "color"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "tags": {
+        "type": "object",
+        "required": ["name", "color"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "tasks": {
+        "type": "object",
+        "required": ["name", "dueDate", "projectUuid", "statusUuid"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "projectUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tagUuid": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid"
+          },
+          "statusUuid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "projects": {
+        "type": "object",
+        "required": ["name", "statusUuid", "color", "dueDate"],
+        "properties": {
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "statusUuid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
