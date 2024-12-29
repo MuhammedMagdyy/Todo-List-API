@@ -1,4 +1,4 @@
-# Todo List
+# Todo List API
 
 ![Node.js](https://img.shields.io/badge/Node.js-green?logo=node.js&style=flat)
 ![Express](https://img.shields.io/badge/Express-lightgrey?logo=express&style=flat)
@@ -7,22 +7,28 @@
 ![MySQL](https://img.shields.io/badge/MySQL-red?logo=mysql&style=flat)
 ![Prisma](https://img.shields.io/badge/Prisma-blueviolet?logo=prisma&style=flat)
 
-Simple API that has basic CRUD operations (Create, Read, Update, and Delete) for managing a to-do list.
+A Todo List API built using Node.js, Express.js, TypeScript, and Prisma ORM. It allows users to create, read, update, and delete projects & tasks and follows the RESTful API design principles.
 
-## Getting started
+## Table of Contents
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+- [Getting started](#getting-started)
+- [Prerequisites](#prerequisites)
+- [Schema](#schema)
+- [Installing](#installing)
+- [API Documentation](#api-documentation-swagger)
 
-Also, You need to read the [**API Documentation**](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/Documentation.md).
+### Getting started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing.
 
 ### Prerequisites
 
 - Download and install [Nodejs](https://nodejs.org/en)
 - Download and install [MySQL](https://www.mysql.com/downloads/) using [Docker](https://www.docker.com/) from [Docker Hub](https://hub.docker.com/_/mysql)
-- A web browser (e.g. Google Chrome, Mozilla Firefox, Microsoft Edge)
-- A text editor (e.g. Visual Studio Code, Sublime Text)
+- A web browser (e.g. [Google Chrome](https://www.google.com/intl/ar_eg/chrome/))
+- A text editor (e.g. `recommended` [Visual Studio Code](https://code.visualstudio.com/download))
 - A platform for testing APIs like [Postman](https://www.postman.com/downloads/)
-- Database engine (e.g [DBeaver](https://dbeaver.io/download/), [DataGrip](https://www.jetbrains.com/datagrip/download/))
+- Database engine (e.g [DBeaver](https://dbeaver.io/download/))
 
 ### Schema
 
@@ -30,20 +36,40 @@ Also, You need to read the [**API Documentation**](https://github.com/MuhammedMa
 
 ### Installing
 
+To set up this project locally, follow these steps:
+
 1. Clone the repository to your local machine:
 
-```HTTPS
-https://github.com/MuhammedMagdyy/Todo-List-API.git
+```
+  https://github.com/MuhammedMagdyy/Todo-List-API.git
 ```
 
-2. Install [required packages](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/package.json) `npm install`
-3. Configure the environment variables, such as the database URL.
-4. `npm run build` then `npm run start` or use `npm run dev`.
+2. Change the project's directory
 
-## Tools & Technologies
+```
+  cd Todo-List-API
+```
 
-- TypeScript
-- Nodejs
-  - Express.js
-- MySQL
-- Prisma (ORM)
+3. Install required [packages](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/package.json) using `npm install`
+
+4. Rename the `.env.example` file to `.env`, then add your [environment variables](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/.env.example)
+
+5. Run the following commands in order:
+
+```
+  npm run db:migrate
+  npm run db:generate
+  npm run db:push
+```
+
+6. Start the application:
+   - Production: `npm start`
+   - Development: `npm run dev`
+
+### API Documentation [Swagger](https://swagger.io/)
+
+After setting up the project locally, you can view the Swagger API Documentation to learn how to use the API.
+
+```
+  http://localhost:{port}/api-docs
+```

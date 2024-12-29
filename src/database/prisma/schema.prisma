@@ -14,7 +14,7 @@ model Project {
   dueDate     DateTime? @map("due_date") @db.Date
   color       String
   createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   statusUuid String @map("status_uuid")
   status     Status @relation(fields: [statusUuid], references: [uuid])
@@ -30,7 +30,7 @@ model Task {
   description String?
   dueDate     DateTime? @map("due_date") @db.Date
   createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   projectUuid String  @map("project_uuid")
   project     Project @relation(fields: [projectUuid], references: [uuid])
@@ -49,7 +49,7 @@ model Tag {
   name      String
   color     String
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   tasks Task[]
 
@@ -61,7 +61,7 @@ model Status {
   name      String
   color     String
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   project Project[]
   task    Task[]
