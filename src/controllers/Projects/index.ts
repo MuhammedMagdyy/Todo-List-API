@@ -1,53 +1,52 @@
 import asyncHandler from 'express-async-handler';
 import { projectSerivce, statusSerivce } from '../../services';
-import { ApiError, projectSchema, projectUpdateSchema } from '../../utils';
-import { CREATED, NO_CONTENT, NOT_FOUND, OK } from '../../shared';
+import { projectSchema, projectUpdateSchema } from '../../utils';
+import { CREATED, NO_CONTENT, OK } from '../../shared';
 
-export const createProject = asyncHandler(async (req, res, next) => {
+export const createProject = asyncHandler(async (req, res) => {
   const schema = projectSchema.parse(req.body);
   const { statusUuid } = schema;
-  const status = await statusSerivce.findOne({ uuid: statusUuid });
 
-  if (!status) {
-    return next(new ApiError('Status not found', NOT_FOUND));
-  }
+  await statusSerivce.isStatusExists(statusUuid);
 
   const project = await projectSerivce.createOne(schema);
 
-  res.status(CREATED).json({ data: project });
+  res
+    .status(CREATED)
+    .json({ message: 'Project created successfully!', data: project });
 });
 
-export const getProject = asyncHandler(async (req, res, next) => {
+export const getProject = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
-  const project = await projectSerivce.findOne({ uuid });
+  const project = await projectSerivce.isProjectExists(uuid);
 
-  if (!project) {
-    return next(new ApiError('Project not found', NOT_FOUND));
-  }
-
-  res.status(OK).json({ data: project });
+  res
+    .status(OK)
+    .json({ message: 'Retrieved project successfully!', data: project });
 });
 
 export const getAllProjects = asyncHandler(async (req, res) => {
   const projects = await projectSerivce.findMany();
 
-  res.status(OK).json({ data: projects });
+  res
+    .status(OK)
+    .json({ message: 'Retrieved projects successfully!', data: projects });
 });
 
 export const getLastFourProjects = asyncHandler(async (req, res) => {
   const projects = await projectSerivce.findLastFour();
 
-  res.status(OK).json({ data: projects });
+  res.status(OK).json({
+    message: 'Retrieved last four projects successfully!',
+    data: projects,
+  });
 });
 
-export const updateProject = asyncHandler(async (req, res, next) => {
+export const updateProject = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
   const schema = projectUpdateSchema.parse(req.body);
-  const project = await projectSerivce.findOne({ uuid });
 
-  if (!project) {
-    return next(new ApiError('Project not found', NOT_FOUND));
-  }
+  await projectSerivce.isProjectExists(uuid);
 
   const updatedProject = await projectSerivce.updateOne({ uuid }, schema);
 
@@ -56,15 +55,9 @@ export const updateProject = asyncHandler(async (req, res, next) => {
     .json({ message: 'Project updated successfully!', data: updatedProject });
 });
 
-export const deleteProject = asyncHandler(async (req, res, next) => {
+export const deleteProject = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
-  const project = await projectSerivce.findOne({ uuid });
-
-  if (!project) {
-    return next(new ApiError('Project not found', NOT_FOUND));
-  }
-
-  await projectSerivce.deleteOne({ uuid });
+  await projectSerivce.deleteProjectByUUID(uuid);
 
   res.sendStatus(NO_CONTENT);
 });

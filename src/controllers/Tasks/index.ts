@@ -5,68 +5,55 @@ import {
   tagService,
   statusSerivce,
 } from '../../services';
-import { ApiError, taskSchema } from '../../utils';
-import { CREATED, NO_CONTENT, NOT_FOUND, OK, BAD_REQUEST } from '../../shared';
+import { taskSchema } from '../../utils';
+import { CREATED, NO_CONTENT, OK } from '../../shared';
 
-export const createTask = asyncHandler(async (req, res, next) => {
+export const createTask = asyncHandler(async (req, res) => {
   const schema = taskSchema.parse(req.body);
   const { projectUuid, tagUuid, statusUuid } = schema;
-  const project = await projectSerivce.findOne({ uuid: projectUuid });
-
-  if (!project) {
-    return next(new ApiError('Project not found', BAD_REQUEST));
-  }
+  await projectSerivce.isProjectExists(projectUuid);
 
   if (tagUuid) {
-    const tag = await tagService.findOne({ uuid: tagUuid });
-
-    if (!tag) {
-      return next(new ApiError('Tag not found', BAD_REQUEST));
-    }
+    await tagService.isTagExists(tagUuid);
   }
 
-  const status = await statusSerivce.findOne({ uuid: statusUuid });
-
-  if (!status) {
-    return next(new ApiError('Status not found', BAD_REQUEST));
-  }
+  await statusSerivce.isStatusExists(statusUuid);
 
   const task = await taskService.createOne(schema);
 
-  res.status(CREATED).json({ data: task });
+  res
+    .status(CREATED)
+    .json({ message: 'Task created successfully!', data: task });
 });
 
-export const getTask = asyncHandler(async (req, res, next) => {
+export const getTask = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
-  const task = await taskService.findOne({ uuid });
+  const task = await taskService.isTaskExists(uuid);
 
-  if (!task) {
-    return next(new ApiError('Task not found', NOT_FOUND));
-  }
-
-  res.status(OK).json({ data: task });
+  res.status(OK).json({ message: 'Retrieved task successfully!', data: task });
 });
 
 export const getAllTasks = asyncHandler(async (req, res) => {
   const tasks = await taskService.findMany();
 
-  res.status(OK).json({ data: tasks });
+  res
+    .status(OK)
+    .json({ message: 'Retrieved tasks successfully!', data: tasks });
 });
 
 export const getLastFourTasks = asyncHandler(async (req, res) => {
   const tasks = await taskService.findLastFour();
 
-  res.status(OK).json({ data: tasks });
+  res
+    .status(OK)
+    .json({ message: 'Retrieved last four tasks successfully!', data: tasks });
 });
 
-export const updateTask = asyncHandler(async (req, res, next) => {
+export const updateTask = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
   const schema = taskSchema.parse(req.body);
-  const task = await taskService.findOne({ uuid });
 
-  if (!task) {
-    return next(new ApiError('Task not found', NOT_FOUND));
-  }
+  await taskService.isTaskExists(uuid);
 
   const updatedTask = await taskService.updateOne({ uuid }, schema);
 
@@ -75,15 +62,9 @@ export const updateTask = asyncHandler(async (req, res, next) => {
     .json({ message: 'Task updated successfully!', data: updatedTask });
 });
 
-export const deleteTask = asyncHandler(async (req, res, next) => {
+export const deleteTask = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
-  const task = await taskService.findOne({ uuid });
-
-  if (!task) {
-    return next(new ApiError('Task not found', NOT_FOUND));
-  }
-
-  await taskService.deleteOne({ uuid });
+  await taskService.deleteTaskByUUID(uuid);
 
   res.sendStatus(NO_CONTENT);
 });

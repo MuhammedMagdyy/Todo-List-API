@@ -1,5 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { projectRepository, ProjectRepository } from '../../repositories';
+import { ApiError } from '../../utils';
+import { NOT_FOUND } from '../../shared';
 
 export class ProjectSerivce {
   constructor(private readonly projectRepository: ProjectRepository) {}
@@ -29,6 +31,19 @@ export class ProjectSerivce {
 
   async deleteOne(query: Prisma.ProjectWhereUniqueInput) {
     return await this.projectRepository.deleteOne(query);
+  }
+
+  async isProjectExists(uuid: string) {
+    const project = await this.findOne({ uuid });
+    if (!project) {
+      throw new ApiError('Project not found', NOT_FOUND);
+    }
+    return project;
+  }
+
+  async deleteProjectByUUID(uuid: string) {
+    await this.isProjectExists(uuid);
+    await this.deleteOne({ uuid });
   }
 }
 

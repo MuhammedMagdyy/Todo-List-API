@@ -1,5 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { taskRepository, TaskRepository } from '../../repositories';
+import { ApiError } from '../../utils';
+import { NOT_FOUND } from '../../shared';
 
 export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
@@ -29,6 +31,19 @@ export class TaskService {
 
   async deleteOne(query: Prisma.TaskWhereUniqueInput) {
     return await this.taskRepository.deleteOne(query);
+  }
+
+  async isTaskExists(uuid: string) {
+    const task = await this.findOne({ uuid });
+    if (!task) {
+      throw new ApiError('Task not found', NOT_FOUND);
+    }
+    return task;
+  }
+
+  async deleteTaskByUUID(uuid: string) {
+    await this.isTaskExists(uuid);
+    await this.deleteOne({ uuid });
   }
 }
 

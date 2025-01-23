@@ -1,5 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { statusRepository, StatusRepository } from '../../repositories';
+import { ApiError } from '../../utils';
+import { NOT_FOUND } from '../../shared';
 
 export class StatusSerivce {
   constructor(private readonly statusRepository: StatusRepository) {}
@@ -10,6 +12,14 @@ export class StatusSerivce {
 
   async findMany() {
     return await this.statusRepository.findMany();
+  }
+
+  async isStatusExists(uuid: string) {
+    const status = await this.findOne({ uuid });
+    if (!status) {
+      throw new ApiError('Status not found', NOT_FOUND);
+    }
+    return status;
   }
 }
 
