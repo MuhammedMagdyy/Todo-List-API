@@ -13,6 +13,7 @@ router.get(
   '/callback',
   googleStrategyPassport.authenticate('google', {
     session: true,
+    successRedirect: 'https://www.google.com',
   }),
   (req, res) => {
     res.status(OK).json({ message: 'Logged in successfully!', user: req.user });
