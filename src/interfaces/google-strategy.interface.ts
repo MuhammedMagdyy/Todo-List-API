@@ -3,6 +3,6 @@ export interface IGoogleStrategy {
   provider: string;
   providerId: string;
   name: string;
-  emails: { value: string }[];
-  pictures: { value: string }[];
+  email?: string;
+  picture?: string;
 }
