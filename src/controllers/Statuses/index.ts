@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { statusSerivce } from '../../services';
-import { OK } from '../../shared';
+import { OK } from '../../utils';
 
 export const getStatus = asyncHandler(async (req, res) => {
   const { uuid } = req.params;

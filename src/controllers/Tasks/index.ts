@@ -5,8 +5,7 @@ import {
   tagService,
   statusSerivce,
 } from '../../services';
-import { taskSchema } from '../../utils';
-import { CREATED, NO_CONTENT, OK } from '../../shared';
+import { taskSchema, CREATED, NO_CONTENT, OK } from '../../utils';
 
 export const createTask = asyncHandler(async (req, res) => {
   const schema = taskSchema.parse(req.body);

@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { tagService } from '../../services';
-import { tagSchema } from '../../utils';
-import { CREATED, OK } from '../../shared';
+import { tagSchema, CREATED, OK } from '../../utils';
 
 export const createTag = asyncHandler(async (req, res) => {
   const schema = tagSchema.parse(req.body);

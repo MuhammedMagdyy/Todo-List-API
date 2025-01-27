@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { taskRepository, TaskRepository } from '../../repositories';
-import { ApiError } from '../../utils';
-import { NOT_FOUND } from '../../shared';
+import { ApiError, NOT_FOUND } from '../../utils';
 
 export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
