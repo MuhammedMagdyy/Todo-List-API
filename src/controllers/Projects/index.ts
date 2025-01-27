@@ -1,7 +1,12 @@
 import asyncHandler from 'express-async-handler';
 import { projectSerivce, statusSerivce } from '../../services';
-import { projectSchema, projectUpdateSchema } from '../../utils';
-import { CREATED, NO_CONTENT, OK } from '../../shared';
+import {
+  projectSchema,
+  projectUpdateSchema,
+  CREATED,
+  NO_CONTENT,
+  OK,
+} from '../../utils';
 
 export const createProject = asyncHandler(async (req, res) => {
   const schema = projectSchema.parse(req.body);

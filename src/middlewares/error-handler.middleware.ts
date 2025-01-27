@@ -1,7 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
-import { ApiError } from '../utils';
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../shared';
+import { ApiError, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../utils';
 
 type ErrorType = ApiError | ZodError | Error;
 

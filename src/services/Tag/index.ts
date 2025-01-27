@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { tagRepository, TagRepository } from '../../repositories';
-import { ApiError } from '../../utils';
-import { NOT_FOUND } from '../../shared';
+import { ApiError, NOT_FOUND } from '../../utils';
 
 export class TagService {
   constructor(private readonly tagRepository: TagRepository) {}
