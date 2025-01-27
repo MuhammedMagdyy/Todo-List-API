@@ -19,10 +19,17 @@ const logger =
     : morgan('combined', {
         skip: (_, res) => res.statusCode < INTERNAL_SERVER_ERROR,
       });
+const ONE_DAY = 24 * 60 * 60 * 1000;
+const cookieConfig = {
+  secure: nodeEnv === 'production' ? true : false,
+  httpOnly: true,
+  maxAge: ONE_DAY,
+};
 const sessionsConfig = {
   secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
+  cookie: cookieConfig,
 };
 
 app.use(logger);

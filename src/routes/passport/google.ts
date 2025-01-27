@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { googleStrategyPassport } from '../../middlewares';
-import { INTERNAL_SERVER_ERROR, OK, UNAUTHORIZED } from '../../utils';
+import { googleStrategyPassport, isAuth } from '../../middlewares';
+import { INTERNAL_SERVER_ERROR, OK } from '../../utils';
 
 const router = Router();
 
@@ -13,18 +13,13 @@ router.get(
   '/callback',
   googleStrategyPassport.authenticate('google', {
     session: true,
-    successRedirect: 'https://www.google.com',
   }),
   (req, res) => {
-    res.status(OK).json({ message: 'Logged in successfully!', user: req.user });
+    res.status(OK).json({ message: 'Logged in successfully!' });
   }
 );
 
-router.get('/profile', (req, res) => {
-  if (req.isUnauthenticated()) {
-    res.status(UNAUTHORIZED).json({ message: 'Unauthorized' });
-    return;
-  }
+router.get('/profile', isAuth, (req, res) => {
   res.status(OK).json({ message: 'User profile', user: req.user });
 });
 

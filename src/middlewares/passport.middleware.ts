@@ -7,6 +7,7 @@ import {
   googleClientId,
   googleClientSecret,
 } from '../config';
+import { ApiError, BAD_REQUEST, NOT_FOUND } from '../utils';
 
 passport.use(
   new GoogleStrategy(
@@ -17,29 +18,28 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const providerId = profile.id;
-        let user = await userService.findUserByProviderId(providerId);
+        const googleId = profile.id;
+
+        let user = await userService.findUserByProviderId(googleId);
 
         if (!user) {
           user = await userService.createOne({
             provider: profile.provider,
-            providerId,
+            providerId: googleId,
             name: profile.displayName,
-            email: profile.emails?.[0].value ?? '',
-            picture: profile.photos?.[0].value ?? '',
+            email: profile.emails?.[0].value || '',
+            picture: profile.photos?.[0].value || '',
           });
-
-          return done(null, user);
         }
 
-        const theOneAndOnlyUser = {
+        const userSessionData = {
           uuid: user.uuid,
           name: user.name,
           email: user.email,
           picture: user.picture,
         };
 
-        done(null, theOneAndOnlyUser);
+        done(null, userSessionData);
       } catch (error) {
         done(error);
       }
@@ -49,13 +49,25 @@ passport.use(
 
 passport.serializeUser((user, done) => done(null, user));
 
-passport.deserializeUser(async (user: IGoogleStrategy, done) => {
+passport.deserializeUser(async (sessionData: IGoogleStrategy, done) => {
   try {
-    const existingUser = await userService.findUserByProviderId(
-      user.providerId
-    );
+    if (!sessionData.providerId) {
+      return done(new ApiError('Invalid data', BAD_REQUEST));
+    }
 
-    done(null, existingUser);
+    const user = await userService.findUserByProviderId(sessionData.providerId);
+
+    if (!user) {
+      return done(new ApiError('User not found', NOT_FOUND));
+    }
+
+    const userSessionData = {
+      uuid: user.uuid,
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
+    };
+    done(null, userSessionData);
   } catch (error) {
     done(error);
   }
