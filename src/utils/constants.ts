@@ -35,3 +35,5 @@ export const DB_COLUNMS = {
     UPDATED_AT: 'updated_at',
   },
 };
+
+export const ONE_DAY = 24 * 60 * 60 * 1000;
