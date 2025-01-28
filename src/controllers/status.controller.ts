@@ -1,13 +1,13 @@
 import asyncHandler from 'express-async-handler';
-import { statusSerivce } from '../../services';
+import { statusSerivce } from '../services';
 import {
   BAD_REQUEST,
   DB_COLUNMS,
   OK,
   paginationSchema,
   sortSchema,
-} from '../../utils';
-import { ISortQuery } from '../../types';
+} from '../utils';
+import { ISortQuery } from '../types';
 
 export const getStatus = asyncHandler(async (req, res) => {
   const { uuid } = req.params;

@@ -4,7 +4,7 @@ import {
   projectSerivce,
   tagService,
   statusSerivce,
-} from '../../services';
+} from '../services';
 import {
   taskSchema,
   taskUpdateSchema,
@@ -15,8 +15,8 @@ import {
   sortSchema,
   BAD_REQUEST,
   DB_COLUNMS,
-} from '../../utils';
-import { ISortQuery } from '../../types';
+} from '../utils';
+import { ISortQuery } from '../types';
 
 export const createTask = asyncHandler(async (req, res) => {
   const schema = taskSchema.parse(req.body);

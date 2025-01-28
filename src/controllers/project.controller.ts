@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import { projectSerivce, statusSerivce, tagService } from '../../services';
+import { projectSerivce, statusSerivce, tagService } from '../services';
 import {
   projectSchema,
   projectUpdateSchema,
@@ -10,8 +10,8 @@ import {
   sortSchema,
   DB_COLUNMS,
   BAD_REQUEST,
-} from '../../utils';
-import { ISortQuery } from '../../types';
+} from '../utils';
+import { ISortQuery } from '../types';
 
 export const createProject = asyncHandler(async (req, res) => {
   const schema = projectSchema.parse(req.body);
