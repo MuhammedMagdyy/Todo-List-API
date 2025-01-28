@@ -19,6 +19,7 @@ export const projectSchema = z.object({
     .max(20, 'Color must be at most 20 characters')
     .trim(),
   dueDate: z.coerce.date(),
+  tagUuid: z.string().uuid().optional(),
 });
 
 export const projectUpdateSchema = z
@@ -40,5 +41,6 @@ export const projectUpdateSchema = z
       .max(20, 'Color must be at most 20 characters')
       .trim(),
     dueDate: z.coerce.date(),
+    tagUuid: z.string().uuid(),
   })
   .partial();

@@ -10,7 +10,7 @@ datasource db {
 model User {
   uuid       String   @id @default(uuid())
   provider   String
-  providerId String   @map("provider_id") @unique
+  providerId String   @unique @map("provider_id")
   email      String?
   name       String?
   picture    String?
@@ -33,6 +33,9 @@ model Project {
   status     Status @relation(fields: [statusUuid], references: [uuid])
 
   tasks Task[]
+
+  tagUuid String? @map("tag_uuid")
+  tag     Tag?    @relation(fields: [tagUuid], references: [uuid])
 
   @@map("projects")
 }
@@ -64,7 +67,8 @@ model Tag {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  tasks Task[]
+  tasks   Task[]
+  Project Project[]
 
   @@map("tags")
 }
