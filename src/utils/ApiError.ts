@@ -1,4 +1,4 @@
-import { HttpExceptionStatusCodes } from '../utils';
+import { HttpExceptionStatusCodes } from '../types';
 
 export class ApiError extends Error {
   status: HttpExceptionStatusCodes;
