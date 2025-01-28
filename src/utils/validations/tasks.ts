@@ -18,21 +18,22 @@ export const taskSchema = z.object({
   statusUuid: z.string().uuid(),
 });
 
-export const taskUpdateSchema = z.object({
-  name: z
-    .string()
-    .min(3, 'Name must be at least 3 characters')
-    .max(30, 'Name must be at most 30 characters')
-    .trim()
-    .optional(),
-  description: z
-    .string()
-    .min(3, 'Description must be at least 3 characters')
-    .max(100, 'Description must be at most 100 characters')
-    .trim()
-    .optional(),
-  dueDate: z.coerce.date().optional(),
-  projectUuid: z.string().uuid().optional(),
-  tagUuid: z.string().uuid().optional(),
-  statusUuid: z.string().uuid().optional(),
-});
+export const taskUpdateSchema = z
+  .object({
+    name: z
+      .string()
+      .min(3, 'Name must be at least 3 characters')
+      .max(30, 'Name must be at most 30 characters')
+      .trim(),
+    description: z
+      .string()
+      .min(3, 'Description must be at least 3 characters')
+      .max(100, 'Description must be at most 100 characters')
+      .trim()
+      .optional(),
+    dueDate: z.coerce.date(),
+    projectUuid: z.string().uuid(),
+    tagUuid: z.string().uuid(),
+    statusUuid: z.string().uuid(),
+  })
+  .partial();

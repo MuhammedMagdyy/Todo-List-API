@@ -5,7 +5,13 @@ import {
   tagService,
   statusSerivce,
 } from '../../services';
-import { taskSchema, CREATED, NO_CONTENT, OK } from '../../utils';
+import {
+  taskSchema,
+  taskUpdateSchema,
+  CREATED,
+  NO_CONTENT,
+  OK,
+} from '../../utils';
 
 export const createTask = asyncHandler(async (req, res) => {
   const schema = taskSchema.parse(req.body);
@@ -50,7 +56,7 @@ export const getLastFourTasks = asyncHandler(async (req, res) => {
 
 export const updateTask = asyncHandler(async (req, res) => {
   const { uuid } = req.params;
-  const schema = taskSchema.parse(req.body);
+  const schema = taskUpdateSchema.parse(req.body);
 
   await taskService.isTaskExists(uuid);
 

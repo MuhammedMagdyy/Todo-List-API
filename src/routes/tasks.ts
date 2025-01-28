@@ -10,7 +10,7 @@ router.get('/last-four', tasks.getLastFourTasks);
 router
   .route('/:uuid')
   .get(tasks.getTask)
-  .put(tasks.updateTask)
+  .patch(tasks.updateTask)
   .delete(tasks.deleteTask);
 
 export { router as taskRouter };
