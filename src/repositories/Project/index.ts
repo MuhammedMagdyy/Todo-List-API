@@ -1,5 +1,8 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import prisma from '../../database/client';
+import { IPaginationQuery } from '../../interfaces';
+import { PaginationService } from '../../services/Pagination.service';
+import { ISortQuery } from '../../types';
 
 export class ProjectRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -12,27 +15,10 @@ export class ProjectRepository {
     return await this.prisma.project.findUnique({ where: query });
   }
 
-  async findMany() {
+  async findMany(pagination: IPaginationQuery, orderBy?: ISortQuery) {
     return await this.prisma.project.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
-
-  async findLastFour() {
-    return await this.prisma.project.findMany({
-      include: {
-        tasks: {
-          include: {
-            tag: true,
-          },
-        },
-      },
-      orderBy: {
-        updatedAt: 'desc',
-      },
-      take: 4,
+      ...PaginationService.getPagination(pagination),
+      orderBy,
     });
   }
 
