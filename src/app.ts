@@ -3,29 +3,31 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import passport from 'passport';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import routes from './routes';
 import { errorHandler } from './middlewares';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
 import { nodeEnv, sessionSecret } from './config';
-import { INTERNAL_SERVER_ERROR } from './utils';
+import { INTERNAL_SERVER_ERROR, ONE_DAY } from './utils';
 
 const app = express();
+
 const logger =
   nodeEnv === 'development'
     ? morgan('dev')
     : morgan('combined', {
         skip: (_, res) => res.statusCode < INTERNAL_SERVER_ERROR,
       });
-const ONE_DAY = 24 * 60 * 60 * 1000;
+
 const cookieConfig = {
-  secure: nodeEnv === 'production' ? true : false,
+  secure: nodeEnv === 'development' ? false : true,
   httpOnly: true,
   maxAge: ONE_DAY,
 };
+
 const sessionsConfig = {
   secret: sessionSecret,
   resave: false,
@@ -34,12 +36,7 @@ const sessionsConfig = {
 };
 
 app.use(logger);
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'http://localhost:5174'],
-    credentials: true,
-  })
-);
+app.use(cors({ origin: ['http://localhost:5174'], credentials: true }));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());

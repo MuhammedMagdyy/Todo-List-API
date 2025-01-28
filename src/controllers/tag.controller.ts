@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler';
-import { tagService } from '../../services';
+import { tagService } from '../services';
 import {
   tagSchema,
   CREATED,
@@ -8,8 +8,8 @@ import {
   DB_COLUNMS,
   BAD_REQUEST,
   sortSchema,
-} from '../../utils';
-import { ISortQuery } from '../../types';
+} from '../utils';
+import { ISortQuery } from '../types';
 
 export const createTag = asyncHandler(async (req, res) => {
   const schema = tagSchema.parse(req.body);

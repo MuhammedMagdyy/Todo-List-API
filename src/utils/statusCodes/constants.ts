@@ -1,5 +1,4 @@
-export type HttpSuccessStatusCodes = 200 | 201 | 204;
-export type HttpExceptionStatusCodes = 400 | 401 | 403 | 404 | 500;
+import { HttpSuccessStatusCodes, HttpExceptionStatusCodes } from '../../types';
 
 // HTTP status codes (Success codes)
 export const OK: HttpSuccessStatusCodes = 200;

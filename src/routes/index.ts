@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { ApiError } from '../utils';
 import { NOT_FOUND, OK } from '../utils';
-import { projectRouter } from './projects';
-import { tagRouter } from './tags';
-import { taskRouter } from './tasks';
-import { statusRouter } from './statuses';
-import { passportRouter } from './passport/strategies';
+import { projectRouter } from './project.routes';
+import { tagRouter } from './tag.routes';
+import { taskRouter } from './task.routes';
+import { statusRouter } from './status.routes';
+import { passportRouter } from './passport/strategies.routes';
 
 const router = Router();
 

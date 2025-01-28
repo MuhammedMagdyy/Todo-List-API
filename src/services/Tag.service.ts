@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { tagRepository, TagRepository } from '../../repositories';
-import { ApiError, NOT_FOUND } from '../../utils';
-import { IPaginationQuery } from '../../interfaces';
-import { ISortQuery } from '../../types';
+import { tagRepository, TagRepository } from '../repositories';
+import { ApiError, NOT_FOUND } from '../utils';
+import { IPaginationQuery } from '../interfaces';
+import { ISortQuery } from '../types';
 
 export class TagService {
   constructor(private readonly tagRepository: TagRepository) {}

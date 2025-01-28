@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { projectRepository, ProjectRepository } from '../../repositories';
-import { ApiError, NOT_FOUND } from '../../utils';
-import { IPaginationQuery } from '../../interfaces';
-import { ISortQuery } from '../../types';
+import { projectRepository, ProjectRepository } from '../repositories';
+import { ApiError, NOT_FOUND } from '../utils';
+import { IPaginationQuery } from '../interfaces';
+import { ISortQuery } from '../types';
 
 export class ProjectSerivce {
   constructor(private readonly projectRepository: ProjectRepository) {}

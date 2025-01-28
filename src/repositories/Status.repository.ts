@@ -1,8 +1,8 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import prisma from '../../database/client';
-import { IPaginationQuery } from '../../interfaces';
-import { PaginationService } from '../../services/Pagination.service';
-import { ISortQuery } from '../../types';
+import prisma from '../database/client';
+import { IPaginationQuery } from '../interfaces';
+import { PaginationService } from '../services/Pagination.service';
+import { ISortQuery } from '../types';
 
 export class StatusRepository {
   constructor(private readonly prisma: PrismaClient) {}
