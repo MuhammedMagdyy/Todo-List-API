@@ -5,8 +5,6 @@ const router = Router();
 
 router.route('/').post(projects.createProject).get(projects.getAllProjects);
 
-router.get('/last-four', projects.getLastFourProjects);
-
 router
   .route('/:uuid')
   .get(projects.getProject)

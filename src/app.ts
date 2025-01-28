@@ -8,6 +8,7 @@ import swaggerDocument from '../swagger.json';
 import routes from './routes';
 import { errorHandler } from './middlewares';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import { nodeEnv, sessionSecret } from './config';
 import { INTERNAL_SERVER_ERROR } from './utils';
@@ -41,6 +42,7 @@ app.use(
 );
 app.use(helmet());
 app.use(express.json());
+app.use(cookieParser());
 app.use(session(sessionsConfig));
 app.use(passport.initialize());
 app.use(passport.session());

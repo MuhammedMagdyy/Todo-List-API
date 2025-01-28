@@ -11,7 +11,12 @@ import {
   CREATED,
   NO_CONTENT,
   OK,
+  paginationSchema,
+  sortSchema,
+  BAD_REQUEST,
+  DB_COLUNMS,
 } from '../../utils';
+import { ISortQuery } from '../../types';
 
 export const createTask = asyncHandler(async (req, res) => {
   const schema = taskSchema.parse(req.body);
@@ -39,19 +44,34 @@ export const getTask = asyncHandler(async (req, res) => {
 });
 
 export const getAllTasks = asyncHandler(async (req, res) => {
-  const tasks = await taskService.findMany();
+  const { pageNumber, pageSize } = paginationSchema.parse(req.query);
+  const { sortBy, order } = sortSchema.parse(req.query);
+  const validColumns = Object.values(DB_COLUNMS.TASK);
+  const sortFields = sortBy?.split(',') || [];
+  const sortOrders = order?.split(',') || [];
+
+  const invalidFields = sortFields.filter(
+    (field) => !validColumns.includes(field)
+  );
+  if (invalidFields.length > 0) {
+    res.status(BAD_REQUEST).json({
+      message: `Invalid sort field(s): ${invalidFields.join(', ')}. Allowed fields: ${validColumns.join(', ')}`,
+    });
+    return;
+  }
+
+  const orderBy: ISortQuery = sortFields.map((field, index) => ({
+    [field]: sortOrders[index] === 'desc' ? 'desc' : 'asc',
+  }));
+
+  const tasks = await taskService.findMany(
+    { pageNumber, pageSize },
+    orderBy.length > 0 ? orderBy : undefined
+  );
 
   res
     .status(OK)
     .json({ message: 'Retrieved tasks successfully!', data: tasks });
-});
-
-export const getLastFourTasks = asyncHandler(async (req, res) => {
-  const tasks = await taskService.findLastFour();
-
-  res
-    .status(OK)
-    .json({ message: 'Retrieved last four tasks successfully!', data: tasks });
 });
 
 export const updateTask = asyncHandler(async (req, res) => {

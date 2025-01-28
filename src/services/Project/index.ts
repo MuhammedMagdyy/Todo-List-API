@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { projectRepository, ProjectRepository } from '../../repositories';
 import { ApiError, NOT_FOUND } from '../../utils';
+import { IPaginationQuery } from '../../interfaces';
+import { ISortQuery } from '../../types';
 
 export class ProjectSerivce {
   constructor(private readonly projectRepository: ProjectRepository) {}
@@ -13,12 +15,8 @@ export class ProjectSerivce {
     return await this.projectRepository.findOne(query);
   }
 
-  async findMany() {
-    return await this.projectRepository.findMany();
-  }
-
-  async findLastFour() {
-    return await this.projectRepository.findLastFour();
+  async findMany(pagination: IPaginationQuery, sort?: ISortQuery) {
+    return await this.projectRepository.findMany(pagination, sort);
   }
 
   async updateOne(
