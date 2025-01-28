@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { taskRepository, TaskRepository } from '../../repositories';
-import { ApiError, NOT_FOUND } from '../../utils';
-import { IPaginationQuery } from '../../interfaces';
-import { ISortQuery } from '../../types';
+import { taskRepository, TaskRepository } from '../repositories';
+import { ApiError, NOT_FOUND } from '../utils';
+import { IPaginationQuery } from '../interfaces';
+import { ISortQuery } from '../types';
 
 export class TaskService {
   constructor(private readonly taskRepository: TaskRepository) {}
