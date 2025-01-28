@@ -21,25 +21,24 @@ export const projectSchema = z.object({
   dueDate: z.coerce.date(),
 });
 
-export const projectUpdateSchema = z.object({
-  name: z
-    .string()
-    .min(3, 'Name must be at least 3 characters')
-    .max(30, 'Name must be at most 30 characters')
-    .trim()
-    .optional(),
-  description: z
-    .string()
-    .min(3, 'Description must be at least 3 characters')
-    .max(100, 'Description must be at most 100 characters')
-    .trim()
-    .optional(),
-  statusUuid: z.string().uuid().optional(),
-  color: z
-    .string()
-    .min(3, 'Color must be at least 3 characters')
-    .max(20, 'Color must be at most 20 characters')
-    .trim()
-    .optional(),
-  dueDate: z.coerce.date().optional(),
-});
+export const projectUpdateSchema = z
+  .object({
+    name: z
+      .string()
+      .min(3, 'Name must be at least 3 characters')
+      .max(30, 'Name must be at most 30 characters')
+      .trim(),
+    description: z
+      .string()
+      .min(3, 'Description must be at least 3 characters')
+      .max(100, 'Description must be at most 100 characters')
+      .trim(),
+    statusUuid: z.string().uuid(),
+    color: z
+      .string()
+      .min(3, 'Color must be at least 3 characters')
+      .max(20, 'Color must be at most 20 characters')
+      .trim(),
+    dueDate: z.coerce.date(),
+  })
+  .partial();

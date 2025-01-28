@@ -10,7 +10,7 @@ router.get('/last-four', projects.getLastFourProjects);
 router
   .route('/:uuid')
   .get(projects.getProject)
-  .put(projects.updateProject)
+  .patch(projects.updateProject)
   .delete(projects.deleteProject);
 
 export { router as projectRouter };
