@@ -32,14 +32,7 @@ passport.use(
           });
         }
 
-        const userSessionData = {
-          uuid: user.uuid,
-          name: user.name,
-          email: user.email,
-          picture: user.picture,
-        };
-
-        done(null, userSessionData);
+        done(null, user);
       } catch (error) {
         done(error);
       }
@@ -51,7 +44,9 @@ passport.serializeUser((user, done) => done(null, user));
 
 passport.deserializeUser(async (sessionData: IGoogleStrategy, done) => {
   try {
-    if (!sessionData.providerId) {
+    const { providerId } = sessionData;
+
+    if (!providerId) {
       return done(new ApiError('Invalid data', BAD_REQUEST));
     }
 
