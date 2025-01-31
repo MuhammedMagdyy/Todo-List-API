@@ -12,13 +12,13 @@ export const projectSchema = z.object({
     .max(100, 'Description must be at most 100 characters')
     .trim()
     .optional(),
-  statusUuid: z.string().uuid(),
+  statusUuid: z.string().uuid({ message: 'Status is required' }),
   color: z
     .string()
     .min(3, 'Color must be at least 3 characters')
     .max(20, 'Color must be at most 20 characters')
     .trim(),
-  dueDate: z.coerce.date(),
+  dueDate: z.coerce.date({ message: 'Due date is required' }),
   tagUuid: z.string().uuid().optional(),
 });
 
@@ -34,13 +34,13 @@ export const projectUpdateSchema = z
       .min(3, 'Description must be at least 3 characters')
       .max(100, 'Description must be at most 100 characters')
       .trim(),
-    statusUuid: z.string().uuid(),
+    statusUuid: z.string().uuid({ message: 'Status is required' }),
     color: z
       .string()
       .min(3, 'Color must be at least 3 characters')
       .max(20, 'Color must be at most 20 characters')
       .trim(),
-    dueDate: z.coerce.date(),
-    tagUuid: z.string().uuid(),
+    dueDate: z.coerce.date({ message: 'Due date is required' }),
+    tagUuid: z.string().uuid({ message: 'Tag is required' }),
   })
   .partial();

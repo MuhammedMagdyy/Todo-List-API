@@ -13,9 +13,9 @@ export const taskSchema = z.object({
     .trim()
     .optional(),
   dueDate: z.coerce.date().optional(),
-  projectUuid: z.string().uuid(),
+  projectUuid: z.string().uuid({ message: 'project is required' }),
   tagUuid: z.string().uuid().optional(),
-  statusUuid: z.string().uuid(),
+  statusUuid: z.string().uuid({ message: 'status is required' }),
 });
 
 export const taskUpdateSchema = z
@@ -31,9 +31,9 @@ export const taskUpdateSchema = z
       .max(100, 'Description must be at most 100 characters')
       .trim()
       .optional(),
-    dueDate: z.coerce.date(),
-    projectUuid: z.string().uuid(),
-    tagUuid: z.string().uuid(),
-    statusUuid: z.string().uuid(),
+    dueDate: z.coerce.date({ message: 'Due date is required' }),
+    projectUuid: z.string().uuid({ message: 'Project is required' }),
+    tagUuid: z.string().uuid({ message: 'Tag is required' }),
+    statusUuid: z.string().uuid({ message: 'Status is required' }),
   })
   .partial();
