@@ -66,6 +66,14 @@ export default [
             match: true,
           },
         },
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          filter: {
+            regex: '^User$',
+            match: true,
+          },
+        },
       ],
     },
   },

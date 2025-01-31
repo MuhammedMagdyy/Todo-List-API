@@ -23,30 +23,24 @@ const logger =
         skip: (_, res) => res.statusCode < INTERNAL_SERVER_ERROR,
       });
 
-const cookieConfig = {
-  secure: nodeEnv === 'development' ? false : true,
-  httpOnly: true,
-  maxAge: ONE_DAY,
-};
-
-const sessionsConfig = {
-  secret: sessionSecret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: cookieConfig,
-};
-
 app.use(logger);
-app.use(
-  cors({
-    origin: ['http://localhost:5174', 'https://tododdd.netlify.app/'],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
-app.use(session(sessionsConfig));
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: nodeEnv === 'production',
+      httpOnly: true,
+      maxAge: ONE_DAY,
+      sameSite: 'none',
+    },
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

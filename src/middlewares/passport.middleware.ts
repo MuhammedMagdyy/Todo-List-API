@@ -1,13 +1,12 @@
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
 import { userService } from '../services';
-import { IGoogleStrategy } from '../interfaces';
 import {
   googleCallbackUrl,
   googleClientId,
   googleClientSecret,
 } from '../config';
-import { ApiError, BAD_REQUEST, NOT_FOUND } from '../utils';
+import { ApiError, NOT_FOUND } from '../utils';
 
 passport.use(
   new GoogleStrategy(
@@ -40,29 +39,17 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => done(null, user));
+passport.serializeUser((user, done) => done(null, user.providerId));
 
-passport.deserializeUser(async (sessionData: IGoogleStrategy, done) => {
+passport.deserializeUser(async (providerId: string, done) => {
   try {
-    const { providerId } = sessionData;
-
-    if (!providerId) {
-      return done(new ApiError('Invalid data', BAD_REQUEST));
-    }
-
-    const user = await userService.findUserByProviderId(sessionData.providerId);
+    const user = await userService.findUserByProviderId(providerId);
 
     if (!user) {
       return done(new ApiError('User not found', NOT_FOUND));
     }
 
-    const userSessionData = {
-      uuid: user.uuid,
-      name: user.name,
-      email: user.email,
-      picture: user.picture,
-    };
-    done(null, userSessionData);
+    done(null, user);
   } catch (error) {
     done(error);
   }
