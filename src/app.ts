@@ -37,7 +37,7 @@ const sessionsConfig = {
 };
 
 app.use(logger);
-app.use(cors({ origin: ['http://localhost:5174'], credentials: true }));
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
