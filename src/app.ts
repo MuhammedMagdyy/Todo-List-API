@@ -37,7 +37,12 @@ const sessionsConfig = {
 };
 
 app.use(logger);
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5174', 'https://tododdd.netlify.app/'],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
