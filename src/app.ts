@@ -23,6 +23,7 @@ const logger =
         skip: (_, res) => res.statusCode < INTERNAL_SERVER_ERROR,
       });
 
+app.set('trust proxy', 1);
 app.use(logger);
 app.use(
   cors({
