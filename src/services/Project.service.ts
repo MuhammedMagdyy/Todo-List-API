@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { projectRepository, ProjectRepository } from '../repositories';
 import { ApiError, NOT_FOUND } from '../utils';
-import { IPaginationQuery } from '../interfaces';
 import { ISortQuery } from '../types';
 
 export class ProjectSerivce {
@@ -15,8 +14,8 @@ export class ProjectSerivce {
     return await this.projectRepository.findOne(query);
   }
 
-  async findMany(pagination: IPaginationQuery, sort?: ISortQuery) {
-    return await this.projectRepository.findMany(pagination, sort);
+  async findMany(sort?: ISortQuery) {
+    return await this.projectRepository.findMany(sort);
   }
 
   async updateOne(

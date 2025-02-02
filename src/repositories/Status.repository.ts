@@ -1,7 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import prisma from '../database/client';
-import { IPaginationQuery } from '../interfaces';
-import { PaginationService } from '../services';
 import { ISortQuery } from '../types';
 
 export class StatusRepository {
@@ -18,9 +16,8 @@ export class StatusRepository {
     });
   }
 
-  async findMany(options: IPaginationQuery, orderBy?: ISortQuery) {
+  async findMany(orderBy?: ISortQuery) {
     return await this.prisma.status.findMany({
-      ...PaginationService.getPagination(options),
       select: {
         uuid: true,
         name: true,

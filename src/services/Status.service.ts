@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { statusRepository, StatusRepository } from '../repositories';
 import { ApiError, NOT_FOUND } from '../utils';
-import { IPaginationQuery } from '../interfaces';
 import { ISortQuery } from '../types';
 
 export class StatusSerivce {
@@ -11,8 +10,8 @@ export class StatusSerivce {
     return await this.statusRepository.findOne(query);
   }
 
-  async findMany(options: IPaginationQuery, orderBy?: ISortQuery) {
-    return await this.statusRepository.findMany(options, orderBy);
+  async findMany(orderBy?: ISortQuery) {
+    return await this.statusRepository.findMany(orderBy);
   }
 
   async isStatusExists(uuid: string) {
