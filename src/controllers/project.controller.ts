@@ -6,7 +6,6 @@ import {
   CREATED,
   NO_CONTENT,
   OK,
-  paginationSchema,
   sortSchema,
   DB_COLUMNS,
   BAD_REQUEST,
@@ -40,7 +39,6 @@ export const getProject = asyncHandler(async (req, res) => {
 });
 
 export const getAllProjects = asyncHandler(async (req, res) => {
-  const { pageNumber, pageSize } = paginationSchema.parse(req.query);
   const { sortBy, order } = sortSchema.parse(req.query);
   const validColumns = Object.values(DB_COLUMNS.PROJECT);
   const sortFields = sortBy?.split(',') || [];
@@ -61,7 +59,6 @@ export const getAllProjects = asyncHandler(async (req, res) => {
   }));
 
   const projects = await projectSerivce.findMany(
-    { pageNumber, pageSize },
     orderBy.length > 0 ? orderBy : undefined
   );
 

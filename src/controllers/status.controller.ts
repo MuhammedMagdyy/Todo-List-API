@@ -1,12 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { statusSerivce } from '../services';
-import {
-  BAD_REQUEST,
-  DB_COLUMNS,
-  OK,
-  paginationSchema,
-  sortSchema,
-} from '../utils';
+import { BAD_REQUEST, DB_COLUMNS, OK, sortSchema } from '../utils';
 import { ISortQuery } from '../types';
 
 export const getStatus = asyncHandler(async (req, res) => {
@@ -19,7 +13,6 @@ export const getStatus = asyncHandler(async (req, res) => {
 });
 
 export const getAllStatuses = asyncHandler(async (req, res) => {
-  const { pageNumber, pageSize } = paginationSchema.parse(req.query);
   const { sortBy, order } = sortSchema.parse(req.query);
   const validColumns = Object.values(DB_COLUMNS.STATUS);
   const sortFields = sortBy?.split(',') || [];
@@ -40,7 +33,6 @@ export const getAllStatuses = asyncHandler(async (req, res) => {
   }));
 
   const statuses = await statusSerivce.findMany(
-    { pageNumber, pageSize },
     orderBy.length > 0 ? orderBy : undefined
   );
 
