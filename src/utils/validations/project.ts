@@ -18,7 +18,7 @@ export const projectSchema = z.object({
     .min(3, 'Color must be at least 3 characters')
     .max(20, 'Color must be at most 20 characters')
     .trim(),
-  dueDate: z.coerce.date({ message: 'Due date is required' }),
+  dueDate: z.coerce.date({ message: 'Due date is required' }).optional(),
   tagUuid: z.string().uuid().optional(),
 });
 

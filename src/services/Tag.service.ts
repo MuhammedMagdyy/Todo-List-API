@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { tagRepository, TagRepository } from '../repositories';
 import { ApiError, NOT_FOUND } from '../utils';
-import { IPaginationQuery } from '../interfaces';
 import { ISortQuery } from '../types';
 
 export class TagService {
@@ -15,8 +14,8 @@ export class TagService {
     return await this.tagRepository.findOne(query);
   }
 
-  async findMany(options: IPaginationQuery, orderBy?: ISortQuery) {
-    return await this.tagRepository.findMany(options, orderBy);
+  async findMany(orderBy?: ISortQuery) {
+    return await this.tagRepository.findMany(orderBy);
   }
 
   async isTagExists(uuid: string) {

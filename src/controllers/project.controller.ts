@@ -8,7 +8,7 @@ import {
   OK,
   paginationSchema,
   sortSchema,
-  DB_COLUNMS,
+  DB_COLUMNS,
   BAD_REQUEST,
 } from '../utils';
 import { ISortQuery } from '../types';
@@ -42,7 +42,7 @@ export const getProject = asyncHandler(async (req, res) => {
 export const getAllProjects = asyncHandler(async (req, res) => {
   const { pageNumber, pageSize } = paginationSchema.parse(req.query);
   const { sortBy, order } = sortSchema.parse(req.query);
-  const validColumns = Object.values(DB_COLUNMS.PROJECT);
+  const validColumns = Object.values(DB_COLUMNS.PROJECT);
   const sortFields = sortBy?.split(',') || [];
   const sortOrders = order?.split(',') || [];
 
