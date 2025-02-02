@@ -49,7 +49,7 @@ model Task {
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
   projectUuid String  @map("project_uuid")
-  project     Project @relation(fields: [projectUuid], references: [uuid])
+  project     Project @relation(fields: [projectUuid], references: [uuid], onDelete: Cascade)
 
   tagUuid String? @map("tag_uuid")
   tag     Tag?    @relation(fields: [tagUuid], references: [uuid])

@@ -1,7 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import prisma from '../database/client';
-import { IPaginationQuery } from '../interfaces';
-import { PaginationService } from '../services/Pagination.service';
 import { ISortQuery } from '../types';
 
 export class TaskRepository {
@@ -15,11 +13,8 @@ export class TaskRepository {
     return await this.prisma.task.findUnique({ where: query });
   }
 
-  async findMany(options: IPaginationQuery, orderBy?: ISortQuery) {
-    return await this.prisma.task.findMany({
-      ...PaginationService.getPagination(options),
-      orderBy,
-    });
+  async findMany(orderBy?: ISortQuery) {
+    return await this.prisma.task.findMany({ orderBy });
   }
 
   async updateOne(

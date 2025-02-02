@@ -11,7 +11,6 @@ import {
   CREATED,
   NO_CONTENT,
   OK,
-  paginationSchema,
   sortSchema,
   BAD_REQUEST,
   DB_COLUNMS,
@@ -44,7 +43,6 @@ export const getTask = asyncHandler(async (req, res) => {
 });
 
 export const getAllTasks = asyncHandler(async (req, res) => {
-  const { pageNumber, pageSize } = paginationSchema.parse(req.query);
   const { sortBy, order } = sortSchema.parse(req.query);
   const validColumns = Object.values(DB_COLUNMS.TASK);
   const sortFields = sortBy?.split(',') || [];
@@ -65,7 +63,6 @@ export const getAllTasks = asyncHandler(async (req, res) => {
   }));
 
   const tasks = await taskService.findMany(
-    { pageNumber, pageSize },
     orderBy.length > 0 ? orderBy : undefined
   );
 
