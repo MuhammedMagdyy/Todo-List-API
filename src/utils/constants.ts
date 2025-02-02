@@ -1,4 +1,4 @@
-export const DB_COLUNMS = {
+export const DB_COLUMNS = {
   PROJECT: {
     UUID: 'uuid',
     NAME: 'name',

@@ -4,7 +4,7 @@ import {
   tagSchema,
   CREATED,
   OK,
-  DB_COLUNMS,
+  DB_COLUMNS,
   BAD_REQUEST,
   sortSchema,
 } from '../utils';
@@ -26,7 +26,7 @@ export const getTag = asyncHandler(async (req, res) => {
 
 export const getAllTags = asyncHandler(async (req, res) => {
   const { sortBy, order } = sortSchema.parse(req.query);
-  const validColumns = Object.values(DB_COLUNMS.TAG);
+  const validColumns = Object.values(DB_COLUMNS.TAG);
   const sortFields = sortBy?.split(',') || [];
   const sortOrders = order?.split(',') || [];
 

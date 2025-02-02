@@ -13,7 +13,7 @@ import {
   OK,
   sortSchema,
   BAD_REQUEST,
-  DB_COLUNMS,
+  DB_COLUMNS,
 } from '../utils';
 import { ISortQuery } from '../types';
 
@@ -44,7 +44,7 @@ export const getTask = asyncHandler(async (req, res) => {
 
 export const getAllTasks = asyncHandler(async (req, res) => {
   const { sortBy, order } = sortSchema.parse(req.query);
-  const validColumns = Object.values(DB_COLUNMS.TASK);
+  const validColumns = Object.values(DB_COLUMNS.TASK);
   const sortFields = sortBy?.split(',') || [];
   const sortOrders = order?.split(',') || [];
 
