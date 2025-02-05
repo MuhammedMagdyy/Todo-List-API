@@ -1,13 +1,20 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
-import { ApiError, BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../utils';
+import {
+  ApiError,
+  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
+  UNAUTHORIZED,
+} from '../utils';
 import { Prisma } from '@prisma/client';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 type ErrorType =
   | ApiError
   | ZodError
   | Error
-  | Prisma.PrismaClientKnownRequestError;
+  | Prisma.PrismaClientKnownRequestError
+  | JsonWebTokenError;
 
 export const errorHandler: ErrorRequestHandler = (
   error: ErrorType,
@@ -28,6 +35,8 @@ export const errorHandler: ErrorRequestHandler = (
   } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const prismaError = handlePrismaError(error);
     res.status(prismaError.status).json({ message: prismaError.message });
+  } else if (error instanceof JsonWebTokenError) {
+    res.status(UNAUTHORIZED).json({ message: 'Invalid token' });
   } else {
     if (process.env.NODE_ENV === 'development') {
       sendErrorToDev(error, res);
@@ -48,7 +57,7 @@ const sendErrorToDev = (error: ErrorType, res: Response): void => {
 const sendErrorToProd = (error: ErrorType, res: Response): void => {
   res
     .status(INTERNAL_SERVER_ERROR)
-    .json({ cause: 'Internal server error', message: error.message });
+    .json({ message: 'Internal server error: Please try again later...' });
 };
 
 const handlePrismaError = (error: Prisma.PrismaClientKnownRequestError) => {
