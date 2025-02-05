@@ -12,7 +12,6 @@ DROP INDEX `users_provider_id_key` ON `users`;
 -- AlterTable
 ALTER TABLE `users` ADD COLUMN `is_verified` BOOLEAN NOT NULL DEFAULT false,
     ADD COLUMN `password` VARCHAR(191) NULL,
-    ADD COLUMN `refresh_token` TEXT NULL,
     MODIFY `provider` ENUM('LOCAL', 'GOOGLE', 'GITHUB') NOT NULL DEFAULT 'LOCAL',
     MODIFY `provider_id` VARCHAR(191) NULL,
     MODIFY `email` VARCHAR(191) NOT NULL;

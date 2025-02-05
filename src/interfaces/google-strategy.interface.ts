@@ -1,8 +1,8 @@
 export interface IGoogleStrategy {
-  uuid: string;
+  id: string;
   provider: string;
-  providerId: string;
+  email: string;
+  verified_email: boolean;
   name: string;
-  email?: string;
   picture?: string;
 }

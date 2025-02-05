@@ -42,7 +42,15 @@ export const SERVER = {
   DEFAULT_PORT_NUMBER: 8080,
   LOCALHOST_URLS: ['http://localhost:3000', 'http://localhost:5174'],
 };
+export const API_INTEGRATION = {
+  GOOGLE: {
+    USER_INFO_SCOPES: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+    ],
+    USER_INFO_URL: 'https://www.googleapis.com/oauth2/v2/userinfo',
+  },
+};
 export const MAGIC_NUMBERS = {
   ONE_DAY: 24 * 60 * 60 * 1000,
-  SEVEN_DAYS: 7 * 24 * 60 * 60 * 1000,
 };
