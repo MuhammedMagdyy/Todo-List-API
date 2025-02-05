@@ -8,15 +8,19 @@ datasource db {
 }
 
 model User {
-  uuid       String   @id @default(uuid())
-  provider   String
-  providerId String   @unique @map("provider_id")
-  email      String?
-  name       String?
-  picture    String?
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  uuid         String   @id @default(uuid())
+  email        String   @unique
+  password     String?
+  name         String?
+  picture      String?
+  provider     Provider @default(LOCAL)
+  providerId   String?  @map("provider_id")
+  isVerified   Boolean  @default(false) @map("is_verified")
+  refreshToken String?  @map("refresh_token") @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
+  @@index([provider, providerId])
   @@map("users")
 }
 
@@ -84,4 +88,10 @@ model Status {
   task    Task[]
 
   @@map("statuses")
+}
+
+enum Provider {
+  LOCAL
+  GOOGLE
+  GITHUB
 }
