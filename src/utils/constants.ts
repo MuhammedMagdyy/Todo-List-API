@@ -35,5 +35,14 @@ export const DB_COLUMNS = {
     UPDATED_AT: 'updatedAt',
   },
 };
-export const ONE_DAY = 24 * 60 * 60 * 1000;
-export const DEFAULT_PORT_NUMBER = 8080;
+export const SERVER = {
+  DEVELOPMENT: 'development',
+  PRODUCTION: 'production',
+  TRUST_PROXY: 'trust proxy',
+  DEFAULT_PORT_NUMBER: 8080,
+  LOCALHOST_URLS: ['http://localhost:3000', 'http://localhost:5174'],
+};
+export const MAGIC_NUMBERS = {
+  ONE_DAY: 24 * 60 * 60 * 1000,
+  SEVEN_DAYS: 7 * 24 * 60 * 60 * 1000,
+};

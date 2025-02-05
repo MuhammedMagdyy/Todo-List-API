@@ -5,7 +5,7 @@
     "emitDecoratorMetadata": true,
     "module": "commonjs",
     "rootDir": "./src",
-    "typeRoots": ["./types"],
+    "typeRoots": ["./src/types"],
     "resolveJsonModule": true,
     "declaration": true,
     "outDir": "./dist",

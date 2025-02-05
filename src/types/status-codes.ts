@@ -1,2 +1,11 @@
 export type HttpSuccessStatusCodes = 200 | 201 | 204;
-export type HttpExceptionStatusCodes = 400 | 401 | 403 | 404 | 500;
+export type HttpExceptionStatusCodes =
+  | 400
+  | 401
+  | 403
+  | 404
+  | 405
+  | 409
+  | 413
+  | 415
+  | 500;

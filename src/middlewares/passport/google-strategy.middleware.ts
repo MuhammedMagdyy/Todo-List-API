@@ -1,12 +1,13 @@
+import { Provider } from '@prisma/client';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
-import { userService } from '../services';
+import { authService, userService } from '../../services';
 import {
   googleCallbackUrl,
   googleClientId,
   googleClientSecret,
-} from '../config';
-import { ApiError, NOT_FOUND } from '../utils';
+} from '../../config';
+import { ApiError, NOT_FOUND } from '../../utils';
 
 passport.use(
   new GoogleStrategy(
@@ -23,15 +24,22 @@ passport.use(
 
         if (!user) {
           user = await userService.createOne({
-            provider: profile.provider,
-            providerId: googleId,
-            name: profile.displayName,
             email: profile.emails?.[0].value || '',
+            name: profile.displayName,
             picture: profile.photos?.[0].value || '',
+            provider: Provider.GOOGLE,
+            providerId: googleId,
+            isVerified: true,
           });
         }
 
-        done(null, user);
+        const tokens = await authService.generateTokens({ uuid: user.uuid });
+
+        done(
+          null,
+          { uuid: user.uuid },
+          { accessToken: tokens.accessToken, refreshToken: tokens.refreshToken }
+        );
       } catch (error) {
         done(error);
       }
@@ -39,17 +47,19 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => done(null, user.providerId));
+passport.serializeUser((user, done) => {
+  done(null, user.uuid);
+});
 
-passport.deserializeUser(async (providerId: string, done) => {
+passport.deserializeUser(async (uuid: string, done) => {
   try {
-    const user = await userService.findUserByProviderId(providerId);
+    const user = await userService.findUserByUUID(uuid);
 
     if (!user) {
       return done(new ApiError('User not found', NOT_FOUND));
     }
 
-    done(null, user);
+    done(null, user as Express.User);
   } catch (error) {
     done(error);
   }

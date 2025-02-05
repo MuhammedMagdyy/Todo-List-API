@@ -70,6 +70,14 @@ export default [
           selector: 'interface',
           format: ['PascalCase'],
           filter: {
+            regex: '^Request$',
+            match: true,
+          },
+        },
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          filter: {
             regex: '^User$',
             match: true,
           },

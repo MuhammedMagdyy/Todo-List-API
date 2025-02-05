@@ -1,4 +1,4 @@
-# Todo List API
+# Taskora
 
 ![Node.js](https://img.shields.io/badge/Node.js-green?logo=node.js&style=flat)
 ![Express](https://img.shields.io/badge/Express-lightgrey?logo=express&style=flat)
@@ -7,7 +7,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-red?logo=mysql&style=flat)
 ![Prisma](https://img.shields.io/badge/Prisma-blueviolet?logo=prisma&style=flat)
 
-A Todo List API built using Node.js, Express.js, TypeScript, and Prisma ORM. It allows users to create, read, update, and delete projects & tasks and follows the RESTful API design principles.
+Taskora API built using Node.js, Express.js, TypeScript, and Prisma ORM. It allows users to create, read, update, and delete projects & tasks and follows the RESTful API design principles.
 
 ## Table of Contents
 
@@ -41,18 +41,18 @@ To set up this project locally, follow these steps:
 1. Clone the repository to your local machine:
 
 ```
-  https://github.com/MuhammedMagdyy/Todo-List-API.git
+  https://github.com/MuhammedMagdyy/Taskora-API.git
 ```
 
 2. Change the project's directory
 
 ```
-  cd Todo-List-API
+  cd Taskora-API
 ```
 
-3. Install required [packages](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/package.json) using `npm install`
+3. Install required [packages](https://github.com/MuhammedMagdyy/Taskora-API/blob/main/package.json) using `npm install`
 
-4. Rename the `.env.example` file to `.env`, then add your [environment variables](https://github.com/MuhammedMagdyy/Todo-List-API/blob/main/.env.example)
+4. Rename the `.env.example` file to `.env`, then add your [environment variables](https://github.com/MuhammedMagdyy/Taskora-API/blob/main/.env.example)
 
 5. Run the following commands in order:
 

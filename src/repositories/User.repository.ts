@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import prisma from '../../database/client';
+import prisma from '../database/client';
 
 export class UserRepository {
   constructor(private readonly prisma: PrismaClient) {}
@@ -8,8 +8,8 @@ export class UserRepository {
     return await this.prisma.user.create({ data });
   }
 
-  async findOne(query: Prisma.UserWhereUniqueInput) {
-    return await this.prisma.user.findUnique({ where: query });
+  async findOne(query: Prisma.UserWhereInput) {
+    return await this.prisma.user.findFirst({ where: query });
   }
 
   async updateOne(
